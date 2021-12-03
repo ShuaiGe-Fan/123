@@ -10,6 +10,7 @@ const mutations = {
   },
 };
 const getters = {};
+
 const actions = {
   LOGIN(context, state) {
     axios.post(api.login, state).then((res) => {
