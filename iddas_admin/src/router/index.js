@@ -3,15 +3,52 @@ import Login from "../views/Login/Login.vue";
 
 const routes = [
   {
-    path: "/",
-    name: "Login",
+    path: "/login",
+    name: "login",
     component: Login,
   },
   {
     path: "/home",
-    name: "Home",
+    name: "home",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Home.vue"),
+      import(/* webpackChunkName: "home" */ "@/views/Home/Home.vue"),
+  },
+  {
+    path: "/merchant",
+    name: "merchant",
+    component: () =>
+      import(/* webpackChunkName: "Guest" */ "../views/Merchant/Merchant.vue"),
+  },
+  {
+    path: "/addMerchant",
+    name: "addMerchant",
+    component: () =>
+      import(/* webpackChunkName: "add" */ "../views/Merchant/AddMerchant.vue"),
+  },
+  {
+    path: "/application",
+    name: "application",
+    component: () =>
+      import(
+        /* webpackChunkName:'application' */ "../views/Application/Application.vue"
+      ),
+  },
+  {
+    path: "/addApplication",
+    name: "addApplication",
+    component: () =>
+      import(
+        /* webpackChunkName:'AddApplication' */ "../views/Application/AddApplication.vue"
+      ),
+  },
+  {
+    path: "/account",
+    name: "account",
+    component: () => {
+      import(
+        /* webpackChunkName:'AddApplication' */ "../views/Account/Account.vue"
+      );
+    },
   },
 ];
 

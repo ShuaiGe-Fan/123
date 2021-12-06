@@ -42,8 +42,9 @@
 </template>
 
 <script>
-import { reactive, ref, toRefs } from "vue";
+import { reactive, ref, toRefs, getCurrentInstance } from "vue";
 import { useStore } from "vuex";
+import { localSet } from "@/common/utils";
 export default {
   name: "Login",
   setup() {
@@ -64,11 +65,15 @@ export default {
         ],
       },
     });
+    const { proxy } = getCurrentInstance();
+    const router = proxy.$root.$router;
     const submitForm = async () => {
       const data = {
-        username: "123",
-        password: "123",
+        username: state.ruleForm.username || "edison",
+        password: state.ruleForm.password || "Dostoyevsky",
       };
+      router.push("merchant");
+      localSet("token", "123");
       store.dispatch("user/LOGIN", data).then((res) => {
         console.log(res);
       });

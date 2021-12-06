@@ -1,0 +1,39 @@
+@font-face {
+    font-family: "iconfont"; /* Project id 2991050 */
+    src: url('//at.alicdn.com/t/font_2991050_cr3z3fm5zz9.woff2?t=1638776557814') format('woff2'),
+         url('//at.alicdn.com/t/font_2991050_cr3z3fm5zz9.woff?t=1638776557814') format('woff'),
+         url('//at.alicdn.com/t/font_2991050_cr3z3fm5zz9.ttf?t=1638776557814') format('truetype');
+  }
+  
+  .iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .icon-idaas-edit:before {
+    content: "\e600";
+  }
+  
+  .icon-idaas-user:before {
+    content: "\e8c8";
+  }
+  
+  .icon-idaas-add:before {
+    content: "\e621";
+  }
+  
+  .icon-idaas-app:before {
+    content: "\eb8f";
+  }
+  
+  .icon-idaas-password:before {
+    content: "\e718";
+  }
+  
+  .icon-idaas-merchant:before {
+    content: "\e670";
+  }
+  

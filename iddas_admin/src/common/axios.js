@@ -2,7 +2,8 @@ import axios from "axios";
 // 引入公共函数js文件
 
 // 默认请求连接
-axios.defaults.baseURL = "https://idaas.shopspade.com/api";
+// axios.defaults.baseURL = "https://idaas.shopspade.com/api";
+axios.defaults.baseURL = "https://testidaas.shopspade.com/api";
 
 // 超时时间（ms）
 axios.defaults.timeout = 2000 * 1000;
@@ -10,9 +11,9 @@ axios.defaults.timeout = 2000 * 1000;
 axios.defaults.withCredentials = true;
 // axios 请求头
 // axios.defaults.headers["X-Requested-With"] = "XMLHttpRequest";
-axios.defaults.headers["token"] = localStorage.getItem("token") || "";
-axios.defaults.headers["Access-Control-Allow-Origin"] = "*";
-axios.defaults.headers.post["Content-Type"] = "application/json";
+// axios.defaults.headers["token"] = localStorage.getItem("token") || "";
+// axios.defaults.headers["Access-Control-Allow-Origin"] = "*";
+axios.defaults.headers.post["Content-Type"] = "application/jsson";
 // axios.defaults.headers.post["dataType"] = "json";
 
 // 请求拦截
@@ -53,12 +54,12 @@ axios.interceptors.response.use(
       if (result.data.msg) {
         // 调用自定义alert
       }
-      return Promise.reject(result.data.data);
+      return Promise.resolve(result.data.data);
     }
     return result;
   },
   (err) => {
-    return Promise.reject(err);
+    return Promise.reject("err", err);
   }
 );
 export default axios;
