@@ -45,9 +45,7 @@ const routes = [
     path: "/account",
     name: "account",
     component: () => {
-      import(
-        /* webpackChunkName:'AddApplication' */ "../views/Account/Account.vue"
-      );
+      import(/* webpackChunkName:'Account' */ "../views/Account/Account.vue");
     },
   },
 ];

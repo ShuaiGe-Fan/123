@@ -23,10 +23,12 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitAdd()">{{
+          <el-button type="primary" size="mini" @click="submitAdd()">{{
             id ? "立即修改" : "立即创建"
           }}</el-button>
-          <el-button type="primary" @click="bankUp()">{{ "返回" }}</el-button>
+          <el-button type="primary" size="mini" @click="backUp">{{
+            "返回"
+          }}</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -132,11 +134,15 @@ export default {
         }
       });
     };
+    const backUp = () => {
+      router.go("-1");
+    };
     return {
       ...toRefs(state),
       goodRef,
       submitAdd,
       editor,
+      backUp,
     };
   },
 };

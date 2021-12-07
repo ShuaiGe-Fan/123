@@ -1,9 +1,10 @@
+/* eslint-disable prettier/prettier */
 <template>
   <el-card class="guest-container">
     <template #header>
       <div class="header">
-        <el-button type="primary" size="small" @click="handleAdd"
-          >新增商户</el-button
+        <el-button type="primary" size="mini" @click="handleAdd">
+          新增应用</el-button
         >
         <el-icon icon-class="icon-ic_shouye" color="primary"></el-icon>
       </div>
@@ -16,33 +17,56 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55"> </el-table-column>
-      <el-table-column prop="name" label="商户名称">
+      <el-table-column prop="name" label="应用名称">
         <template #default="scope">
           {{ scope.row.name }}
         </template>
       </el-table-column>
-      <el-table-column prop="phone" label="手机号">
+      <el-table-column prop="appId" label="应用ID">
+        <template #default="scope">
+          {{ scope.row.appId }}
+        </template>
+      </el-table-column>
+      <el-table-column prop="phone" label="设备类型">
         <template #default="scope">
           {{ scope.row.phone }}
         </template>
       </el-table-column>
-      <el-table-column label="状态">
+      <el-table-column label="应用状态">
         <template #default="scope">
-          <span :style="scope.row.type == 0 ? 'color: green;' : 'color: red;'">
-            {{ scope.row.type == 0 ? "正常" : "禁用" }}
+          <el-switch
+            v-model="scope.row.type"
+            style="margin-left: 24px"
+            inline-prompt
+            active-color="#13ce66"
+            :active-icon="Check"
+            :inactive-icon="Close"
+            :active-value="1"
+            :inactive-value="0"
+          >
+          </el-switch>
+        </template>
+      </el-table-column>
+      <el-table-column label="二级认证状态">
+        <template #default="scope">
+          <span>
+            <el-switch
+              v-model="scope.row.outType"
+              style="margin-left: 24px"
+              inline-prompt
+              active-color="#13ce66"
+              :active-icon="Check"
+              :inactive-icon="Close"
+              active-value="1"
+              inactive-value="0"
+            >
+            </el-switch>
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="是否注销">
+      <el-table-column prop="appExpire" label="过期时间">
         <template #default="scope">
-          <span :style="scope.row.isOut == 0 ? 'color: green;' : 'color: red;'">
-            {{ scope.row.isOut == 0 ? "正常" : "注销" }}
-          </span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="outTime" label="过期时间">
-        <template #default="scope">
-          {{ scope.row.outTime }}
+          {{ scope.row.appExpire }}
         </template></el-table-column
       >
       <el-table-column prop="createTime" label="注册时间"
@@ -84,22 +108,28 @@
 </template>
 
 <script>
-import { onMounted, reactive, ref, toRefs } from "vue";
+import { onMounted, reactive, ref, toRefs, computed } from "vue";
 // import axios from "@/common/axios";
+import { Check, Close } from "@element-plus/icons";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
+import axios from "@/common/axios";
+import api from "@/common/api/api";
+import { useStore, mapGetters, mapState } from "vuex";
 export default {
   name: "Application",
   setup() {
     const multipleTable = ref(null);
     const router = useRouter();
+    const store = useStore();
+
     const state = reactive({
       loading: false,
       tableData: [
         {
           name: "商家1",
           phone: "15606530062",
-          type: 0,
+          type: 1,
           outType: 0,
           time: "2021-01-25",
           outTime: "2021-02-15",
@@ -108,16 +138,34 @@ export default {
       selectList: [], // 选中项
       page: {
         total: 23, // 总条数
-        currentPage: "1", // 当前页
+        currentPage: 1, // 当前页
         pageSize: 100, // 分页大小
       },
     });
     onMounted(() => {
+      console.log(store);
+      console.log(store.getters["user/userName"]);
       getDataList();
     });
+    const isLoading = computed(
+      mapGetters(["appId"]).appId.bind({ $store: store })
+    );
+    const userInfo = computed(
+      mapState(["userInfo"]).userInfo.bind({ $store: store })
+    );
+    console.log(userInfo);
+    console.log(isLoading);
     // 获取列表
     const getDataList = () => {
       // state.loading = true;
+
+      const data = {
+        merchantId: store.getters["user/merchantId"],
+      };
+      axios.post(api.getMerchantAppList, data).then((res) => {
+        console.log("getMerchantAppList", res);
+        state.tableData = res.merchantApps;
+      });
     };
     // 分页
     const handleSizeChange = (val) => {
@@ -158,10 +206,13 @@ export default {
       handleSelectionChange,
       handleChangePage,
       handleSizeChange,
+      Check,
+      Close,
     };
   },
 };
 </script>
+
 <style scoped>
 .guest-container {
   min-height: 100%;
@@ -169,4 +220,5 @@ export default {
 .el-card.is-always-shadow {
   min-height: 100% !important;
 }
+/* eslint-disable-next-line prettier/prettier */
 </style>

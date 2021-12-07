@@ -12,8 +12,8 @@
           :default-openeds="state.defaultOpen"
           background-color="#222832"
           text-color="#fff"
+          :default-active="$route.path"
           :router="true"
-          :default-active="state.currentPath"
         >
           <el-sub-menu index="3">
             <template #title>
@@ -86,6 +86,7 @@ export default {
       );
     }
     const unwatch = router.beforeEach((to, from, next) => {
+      debugger;
       if (to.path == "/login") {
         // 如果路径是 /login 则正常执行
         next();

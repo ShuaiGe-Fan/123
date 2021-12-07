@@ -1,22 +1,21 @@
-import api from "@/common/api/api.js";
-import axios from "@/common/axios.js";
 const state = {
-  userInfo: {},
+  userInfo: JSON.parse(localStorage.getItem("userInfo")) || null,
 };
-
+const getters = {
+  user: (state) => state.userInfo.user,
+  appId: (state) => state.userInfo.user.appId,
+  userName: (state) => state.userInfo.user.userName,
+  merchantId: (state) => state.userInfo.user.merchantId,
+};
 const mutations = {
   SET_USERINFO(state, val) {
-    state.user = val;
+    localStorage.setItem("userInfo", JSON.stringify(val));
+    state.userInfo = val;
   },
 };
-const getters = {};
 
 const actions = {
   LOGIN(context, state) {
-    console.log("LOGIN", 123456);
-    axios.post(api.login, state).then((res) => {
-      console.log(res);
-    });
     context.commit("SET_USERINFO", state);
   },
 };

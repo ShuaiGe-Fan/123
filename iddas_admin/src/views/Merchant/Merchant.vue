@@ -76,6 +76,7 @@
       :page-size="page.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="page.total"
+      :page-count="page.tota"
       @size-change="handleSizeChange"
       @current-change="handleChangePage"
     >
@@ -107,9 +108,9 @@ export default {
       ], // 数据列表
       selectList: [], // 选中项
       page: {
-        total: 23, // 总条数
+        total: 223, // 总条数
         currentPage: 1, // 当前页
-        pageSize: 10, // 分页大小
+        pageSize: 100, // 分页大小
       },
     });
     onMounted(() => {

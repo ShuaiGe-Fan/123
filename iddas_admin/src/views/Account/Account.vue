@@ -47,7 +47,7 @@ import axios from "@/common/axios";
 import { ElMessage } from "element-plus";
 import md5 from "js-md5";
 export default {
-  name: "Account",
+  name: "account",
   setup() {
     const nameRef = ref(null);
     const passRef = ref(null);

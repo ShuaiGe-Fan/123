@@ -8,11 +8,11 @@
         label-width="100px"
         class="goodForm"
       >
-        <el-form-item label="商品名称" prop="goodsName">
+        <el-form-item label="应用名称" prop="goodsName">
           <el-input
             style="width: 300px"
             v-model="goodForm.goodsName"
-            placeholder="请输入商品名称"
+            placeholder="请输入应用名称"
           ></el-input>
         </el-form-item>
 
@@ -23,10 +23,10 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitAdd()">{{
+          <el-button type="primary" size="mini" @click="submitAdd()">{{
             id ? "立即修改" : "立即创建"
           }}</el-button>
-          <el-button type="primary" @click="bankUp()">{{ "返回" }}</el-button>
+          <el-button size="mini" @click="backUp()">{{ "返回" }}</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -132,11 +132,15 @@ export default {
         }
       });
     };
+    const backUp = () => {
+      router.go("-1");
+    };
     return {
       ...toRefs(state),
       goodRef,
       submitAdd,
       editor,
+      backUp,
     };
   },
 };

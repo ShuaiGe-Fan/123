@@ -1,6 +1,9 @@
 import axios from "axios";
+import { ElMessage } from "element-plus";
+import { useRouter } from "vue-router";
 // 引入公共函数js文件
-
+const route = useRouter();
+console.log(route);
 // 默认请求连接
 // axios.defaults.baseURL = "https://idaas.shopspade.com/api";
 axios.defaults.baseURL = "https://testidaas.shopspade.com/api";
@@ -31,32 +34,40 @@ axios.interceptors.request.use(
 // 响应拦截
 axios.interceptors.response.use(
   (result) => {
+    let data = result.data;
     // ===========================================================
     // 返回方式一
-    /*console.log(result);
-  if (result.status === 200) {
-    if (result.data && result.data.code > 0) {
-      return Promise.resolve(result);
-    } else {
-      alert(result.data.msg || "操作失败");
-      return Promise.reject(result);
-    }
-  } else {
-    alert("网络异常");
-    return Promise.reject(result);
-  }//*/
+    console.log(result);
+    // if (result.status === 200) {
+    //   if (result.data && result.data.code > 0) {
+    //     return Promise.resolve(result);
+    //   } else {
+    //     alert(result.data.msg || "操作失败");
+    //     return Promise.reject(result);
+    //   }
+    // } else {
+    //   alert("网络异常");
+    //   return Promise.reject(result);
+    // }
 
     // ==========================================================
     // 返回方式二
     // 返回数据前做了什么
     // console.log(result);
-    if (result.data.code < -100) {
-      if (result.data.msg) {
+    // debugger;
+    // debugger;
+    if (data.code !== 1000000) {
+      if (data.msg) {
         // 调用自定义alert
+        ElMessage.error(data.msg);
       }
-      return Promise.resolve(result.data.data);
+      if (data.code === 7000000) {
+        ElMessage.error(data.msg);
+      }
+      return Promise.reject(data.result);
+    } else {
+      return Promise.resolve(data.result);
     }
-    return result;
   },
   (err) => {
     return Promise.reject("err", err);
